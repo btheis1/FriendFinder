@@ -2,7 +2,11 @@
 <html lang="en-us">
     <head>
         <title>Friend Finder</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://code.jquery.com/jquery.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+      
     </head>
     <body>
         <div class="col-md-8 col-md-offset-2">
@@ -101,7 +105,7 @@
                         </select>
                     <h3><strong>Question 9</strong></h3>
                     <h4>You consider yourself more practical than creative.</h4>
-                        <select class="chosen-select" id="q1">
+                        <select class="chosen-select" id="q9">
                             <option value="">Select an option</option>
                             <option value="1">1 (Strongly Disagree)</option>
                             <option value="2">2</option>
@@ -120,7 +124,7 @@
                             <option value="5">5 (Strongly Agree)</option>
                         </select>
                 <br><br>
-                <button type="submit" class="btn btn-primary btn-lg btn-block">Submit your answers!</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitA">Submit your answers!</button>
                       
             </form>
     
@@ -130,6 +134,35 @@
             </nav>
  
         </div>
+
+        <script type="text/javascript">
+            $("#submitA").on("click", function(event) {
+      
+                event.preventDefault();
+
+                var newFriend = {
+                    name: $("#nameInput").val().trim(),
+                    image: $("#image").val().trim(),
+                    scores: [$("#q1").val(), $("#q2").val(), $("#q3").val(), $("#q4").val(), $("#q5").val(), $("#q6").val(), $("#q7").val(), $("#q8").val(), $("#q9").val(), $("#q10").val()]
+                };
+
+                console.log(newFriend);
+
+                $.post("/api/friends", newFriend,
+                    function(data) {
+
+                        if(data) {
+                            alert(`Friend added! Good job, brook, you can do it`);
+                            $("#nameInput").val("");
+                            $("#image").val("");
+                        }
+
+
+
+                    });
+
+            });
+        </script>
 
     </body>
 </html>

@@ -1,0 +1,26 @@
+{
+  "name": "friend-finder",
+  "version": "1.0.0",
+  "description": "Full stack site that stores user input and compares data to find friend matches.",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.16.4",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "watch": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/btheis1/FriendFinder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/btheis1/FriendFinder/issues"
+  },
+  "homepage": "https://github.com/btheis1/FriendFinder#readme"
+}
