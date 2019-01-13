@@ -2,6 +2,9 @@ var path = require("path");
 
 var friendsData = require("../data/friends");
 
+
+
+
 module.exports = function(app) {
     app.get("/api/friends", function(req, res) {
         res.json(friendsData);
@@ -40,6 +43,7 @@ module.exports = function(app) {
         for (i = 0; i < finalDifferences.length; i++) {
             if (matchScore === finalDifferences[i]) {
                 console.log(`Match found! Index ${i}`);
+                $('#resultsModal').modal(options)
                 return;
             }
         }
