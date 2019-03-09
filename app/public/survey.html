@@ -7,27 +7,14 @@
         <script src="https://code.jquery.com/jquery.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
       
+        <!-- Chosen -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
+      
+      
     </head>
     <body>
-        <div class="modal fade" id="resultsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  ...
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-              </div>
-            </div>
-          </div> 
+         
         <div class="col-md-8 col-md-offset-2">
             <h1>Survey Questions</h1><hr>
             <h3><strong>About You:</strong></h3>
@@ -146,17 +133,61 @@
                 <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitA">Submit your answers!</button>
                       
             </form>
-    
+
             <nav class="nav">
                 <a class="nav-link active" href="#">API Friends List </a> |
                 <a class="nav-link" href="#">GitHub Repo</a>
             </nav>
+
+            <div id="results-modal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+            
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button class="close" data-dismiss="modal">&times;</button>
+                      <h2 class="modal-title"><strong>Best Match</strong></h2>
+                    </div>
+                    <div class="modal-body">
+                      <h2 id="match-name"></h2>
+                      <img id="match-img" src="#" alt="">
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+            
+                </div>
+              </div>
+            
  
         </div>
 
         <script type="text/javascript">
+            var config = {
+                ".chosen-select": {},
+                ".chosen-select-deselect": {
+                    allow_single_deselect: true
+                },
+                ".chosen-select-no-single": {
+                    disable_search_threshold: 10
+                },
+                ".chosen-select-no-results": {
+                    no_results_text: "Oops, nothing found!"
+                },
+                ".chosen-select-width": {
+                    width: "95%"
+                }
+            };
+
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+
+
             $("#submitA").on("click", function(event) {
-      
+                
                 event.preventDefault();
 
                 var newFriend = {
@@ -169,19 +200,11 @@
 
                 $.post("/api/friends", newFriend,
                     function(data) {
-
-                        if(data) {
-                            alert(`Friend added! Good job, brook, you can do it`);
-                            $("#nameInput").val("");
-                            $("#image").val("");
-                        }
-
-
-
+                        $("#match-name").text(data.name);
+                        $("#match-img").attr("src", data.image);
+                        $("#results-modal").modal("toggle");
+                        
                 });
-
-                
-
             });
         </script>
 
